@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.hiltPlugin)
+    id("kotlin-kapt")
 }
 
 android {
@@ -40,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
@@ -59,6 +61,29 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+
+    implementation(libs.hiltNavigationCompose)
+
+    implementation(libs.coilCompose)
+
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.hiltNavigationCompose)
+
+    implementation(libs.retrofit)
+    implementation(libs.moshiConverter)
+    implementation(libs.gooleGson)
+    implementation(libs.gsonCoverter)
+
+    implementation(libs.okHttp)
+    implementation(libs.okHttpLoggingInterceptor)
+
+    implementation(libs.roomRuntime)
+    implementation(libs.roomKtx)
+    kapt(libs.roomCompiler)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

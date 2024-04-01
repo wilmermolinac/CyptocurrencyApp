@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CyptocurrencyApp</string>
+    <string name="msg_error_connection">Couldn\'t reach server. Check your internet connection.</string>
 </resources>
