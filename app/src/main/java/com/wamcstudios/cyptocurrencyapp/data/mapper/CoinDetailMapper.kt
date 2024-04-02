@@ -16,7 +16,9 @@ fun CoinDetailDto.toCoinDetail(): CoinDetail {
         isNew = isNew,
         lastDataAt = lastDataAt,
         links = links,
-        linksExtended = linksExtended,
+        linksExtended = linksExtended.map {
+            it.url
+        },
         logo = logo,
         message = message,
         name = name,

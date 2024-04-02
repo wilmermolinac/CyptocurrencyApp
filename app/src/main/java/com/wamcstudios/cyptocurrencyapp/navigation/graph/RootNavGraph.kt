@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.wamcstudios.aifusion.navigation.utils.navigate
 import com.wamcstudios.cyptocurrencyapp.navigation.routes.NavigationRoute
+import com.wamcstudios.cyptocurrencyapp.presentation.coin_detail.CoinDetailScreen
 import com.wamcstudios.cyptocurrencyapp.presentation.coin_list.CoinListScreen
 
 @Composable
@@ -30,6 +31,8 @@ fun RootNavGraph(navHostController: NavHostController, startDestination: Navigat
         ) {
 
             val coinId = it.arguments?.getString("coinId")
+
+            CoinDetailScreen(onNavigate = navHostController::navigate)
 
         }
     }

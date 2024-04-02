@@ -36,15 +36,18 @@ class CoinListViewModel @Inject constructor(private val coinUseCases: CoinUseCas
     }
 
 
-
-
-
     fun onEvent(event: CoinListEvent) {
         when (event) {
             is CoinListEvent.OnClickCoin -> {
                 viewModelScope.launch {
                     _uiEvent.send(UiEvent.Navigate(route = NavigationRoute.CoinDetail.passData(event.coinId)))
                 }
+            }
+
+            is CoinListEvent.ChangeValueQuery -> {
+                state = state.copy(query = event.query)
+
+                getCoinsList()
             }
         }
     }
@@ -73,8 +76,28 @@ class CoinListViewModel @Inject constructor(private val coinUseCases: CoinUseCas
                     }
 
                     is Resource.Success -> {
-                        state =
-                            state.copy(isLoading = false, coinsList = resource.data ?: emptyList())
+
+                        if (state.query.isBlank()) {
+                            state =
+                                state.copy(
+                                    isLoading = false,
+                                    coinsList = resource.data ?: emptyList()
+                                )
+                        } else {
+                            val query = state.query.lowercase()
+
+                            val dataFilter = resource.data?.let { data ->
+                                data.filter {
+                                    it.name.lowercase().contains(query) || it.symbol.lowercase()
+                                        .contains(query)
+                                }
+                            }
+
+                            state =
+                                state.copy(isLoading = false, coinsList = dataFilter ?: emptyList())
+                        }
+
+
                     }
                 }
             }.launchIn(viewModelScope)

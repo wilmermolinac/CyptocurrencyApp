@@ -17,9 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.wamcstudios.calorytracker.ui.theme.LocalSpacing
+import com.wamcstudios.cyptocurrencyapp.R
 import com.wamcstudios.cyptocurrencyapp.domain.model.Coin
 import com.wamcstudios.cyptocurrencyapp.domain.model.CoinType
 
@@ -37,33 +39,37 @@ fun CoinItem(modifier: Modifier = Modifier, item: Coin, onClick: () -> Unit) {
         ) {
 
             Text(
-                text = item.name,
+                text = "${item.rank}. ${item.name} (${item.symbol})",
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = MaterialTheme.colorScheme.primary
                 )
             )
             Spacer(modifier = modifier.height(spacing.spaceNanoSmall))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = item.symbol, style = MaterialTheme.typography.headlineLarge)
+                Text(
+                    text = item.type.name,
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
 
-                Surface(shape = CircleShape, color = Color.White) {
-                    Text(
-                        modifier = Modifier.padding(spacing.spaceMicroSmall),
-                        text = item.rank.toString(),
-                        style = MaterialTheme.typography.headlineLarge.copy(
-                            fontWeight = FontWeight.ExtraBold, color = Color.Black
-                        )
-                    )
+                )
+
+                val textActive = if (item.isActive) {
+                    stringResource(id = R.string.active)
+                } else {
+                    stringResource(id = R.string.inactive)
                 }
 
-            }
+                Text(
+                    text = textActive,
+                    style = MaterialTheme.typography.titleSmall.copy(color = MaterialTheme.colorScheme.primary)
+                )
 
-            Text(text = item.type.name, style = MaterialTheme.typography.titleLarge)
+            }
 
 
         }

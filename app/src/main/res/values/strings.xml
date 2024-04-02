@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">CyptocurrencyApp</string>
     <string name="msg_error_connection">Couldn\'t reach server. Check your internet connection.</string>
+    <string name="active">Active</string>
+    <string name="inactive">Inactive</string>
+    <string name="tags">Tags</string>
+    <string name="none">None</string>
+    <string name="description">Description</string>
+    <string name="team_members">Team members</string>
+    <string name="place_holder_search">Search ...</string>
 </resources>
