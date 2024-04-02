@@ -22,9 +22,10 @@ class CoinRepositoryImpl @Inject constructor(private val api: ApiService) : Coin
         try {
             emit(Resource.Loading())
 
-            val coins = api.getCoins().coins.map {
+            val coins = api.getCoins().map {
                 it.toCoin()
             }
+
 
             emit(Resource.Success(coins))
 

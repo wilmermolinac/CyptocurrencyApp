@@ -10,6 +10,7 @@ import com.wamcstudios.cyptocurrencyapp.R
 import com.wamcstudios.cyptocurrencyapp.core.common.Resource
 import com.wamcstudios.cyptocurrencyapp.core.utils.UiText
 import com.wamcstudios.cyptocurrencyapp.domain.use_case.CoinUseCases
+import com.wamcstudios.cyptocurrencyapp.navigation.routes.NavigationRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -25,6 +26,9 @@ class CoinListViewModel @Inject constructor(private val coinUseCases: CoinUseCas
     var state by mutableStateOf(CoinListState())
         private set
 
+    private val _uiEvent = Channel<UiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
+
     private var coinJob: Job? = null
 
     init {
@@ -32,9 +36,18 @@ class CoinListViewModel @Inject constructor(private val coinUseCases: CoinUseCas
     }
 
 
-    private val _uiEvent = Channel<UiEvent>()
-    val uiEvent = _uiEvent.receiveAsFlow()
 
+
+
+    fun onEvent(event: CoinListEvent) {
+        when (event) {
+            is CoinListEvent.OnClickCoin -> {
+                viewModelScope.launch {
+                    _uiEvent.send(UiEvent.Navigate(route = NavigationRoute.CoinDetail.passData(event.coinId)))
+                }
+            }
+        }
+    }
 
     private fun getCoinsList() {
 

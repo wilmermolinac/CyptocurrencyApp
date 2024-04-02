@@ -47,6 +47,9 @@ fun CoinListScreen(onNavigate: (UiEvent) -> Unit, viewModel: CoinListViewModel =
     Scaffold(snackbarHost = {
         SnackbarHost(hostState = snackbarHostState)
     }) {
-        CoinListContent(modifier = Modifier.padding(it))
+        CoinListContent(
+            modifier = Modifier.padding(it),
+            state = state,
+            onEvent = { viewModel.onEvent(it) })
     }
 }
